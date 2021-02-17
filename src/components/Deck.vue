@@ -81,7 +81,8 @@ export default {
       console.log("Fetch next page");
       if (this.nextPage !== null) {
         this.onloading = true;
-        fetch(this.nextPage)
+				var urlApi = this.nextPage.replace("http://", "https://");
+        fetch(urlApi)
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
@@ -122,11 +123,11 @@ export default {
           document.documentElement.scrollTop +
             window.innerHeight -
             document.documentElement.offsetHeight >
-            -5 &&
+            -1 &&
           document.documentElement.scrollTop +
             window.innerHeight -
             document.documentElement.offsetHeight <
-            5;
+            1;
 
         if (bottomOfWindow && !this.onloading) {
           // console.log('at bottom');
