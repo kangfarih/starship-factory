@@ -1,21 +1,14 @@
 <template>
   <div class="deck-page">
-    <SearchBar v-on:keyup.native.enter="onKeyUp" ref="searchbar"/>
-    <!-- <div class="search-container">
-      <input
-        v-on:keyup.enter="onSubmit"
-        v-model="searchText"
-        type="text"
-        id="search-bar"
-        placeholder="Search?"
-      />
-      <a href="#" v-on:click="onSubmit"
-        ><img class="search-icon" src="/search-icon.png"
-      /></a>
-    </div> -->
-
+    <Modal v-bind:class="{ hide: !showModal }" />
+    <SearchBar v-on:keyup.native.enter="onKeyUp" ref="searchbar" />
     <div class="container">
-      <div v-for="(ship, index) in starshipList" :key="index" class="card">
+      <div
+        v-for="(ship, index) in starshipList"
+        :key="index"
+        class="card"
+        v-on:click="toggleModal"
+      >
         <div class="title">{{ ship.name }}</div>
         <div class="features">
           <ul>
@@ -49,10 +42,11 @@
 
 <script>
 import SearchBar from "./SearchBar";
+import Modal from "./Modal";
 
 export default {
   name: "Deck",
-  components: { SearchBar },
+  components: { SearchBar, Modal },
   data: function () {
     return {
       urlBase: "https://swapi.dev/api/",
@@ -60,6 +54,7 @@ export default {
       nextPage: "",
       onloading: false,
       searchText: "",
+      showModal: false,
     };
   },
   created: function () {
@@ -133,11 +128,14 @@ export default {
     onSubmit() {
       this.fetchSearchData();
     },
-		onKeyUp(){
-			this.searchText = this.$refs.searchbar._data.searchText;
-			this.fetchSearchData();
-			// console.log(this.$refs.searchbar._data.searchText);
-		}
+    onKeyUp() {
+      this.searchText = this.$refs.searchbar._data.searchText;
+      this.fetchSearchData();
+      // console.log(this.$refs.searchbar._data.searchText);
+    },
+    toggleModal() {
+      this.showModal = !this.showModal;
+    },
   },
   mounted() {
     this.scroll();
@@ -151,6 +149,10 @@ export default {
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .deck-page {
@@ -332,4 +334,13 @@ input#search-bar:focus:-ms-placeholder {
   top: -35px;
   right: 10px;
 } */
+
+.modal-container {
+  transition: all 0.5s;
+}
+
+.modal-container.hide {
+  display: none;
+  transition: all 0.5s;
+}
 </style>
