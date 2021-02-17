@@ -77,6 +77,7 @@ export default {
     },
     fetchNext() {
       // console.log("fetch Next");
+			console.log("Fetch next page")
       if (this.nextPage !== null) {
         this.onloading = true;
         fetch(this.nextPage)
@@ -113,8 +114,7 @@ export default {
         this.fetchData();
       }
     },
-    scroll(person) {
-			console.log(person)
+    scroll() {
       window.onscroll = () => {
         let bottomOfWindow =
           document.documentElement.scrollTop + window.innerHeight ===
@@ -139,7 +139,7 @@ export default {
     },
   },
   mounted() {
-    this.scroll(this.person);
+    this.scroll();
   },
 };
 </script>

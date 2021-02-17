@@ -2,7 +2,7 @@
   <div class="modal-container">
     <div class="modal-main">
       <div class="modal-header">
-        <button class="btn-modal" v-on:click="closeModal">X</button>
+        <button class="btn-close" v-on:click="closeModal">X</button>
       </div>
       <div class="modal-body">
         <span>Test Title</span>
@@ -60,4 +60,16 @@ export default {
   background-color: rgb(0, 0, 0);
   color: white;
 }
+
+.modal-header{
+  height: 40px;
+  width: 100%;
+}
+.btn-close{
+  float: right;
+  height: 100%;
+  width: 40px;
+  font-size: 20px;
+}
+
 </style>
