@@ -1,6 +1,7 @@
 <template>
   <div class="deck-page">
-    <div class="search-container">
+    <SearchBar v-on:keyup.native.enter="onKeyUp" ref="searchbar"/>
+    <!-- <div class="search-container">
       <input
         v-on:keyup.enter="onSubmit"
         v-model="searchText"
@@ -8,8 +9,10 @@
         id="search-bar"
         placeholder="Search?"
       />
-      <a href="#" v-on:click="onSubmit"><img class="search-icon" src="/search-icon.png" /></a>
-    </div>
+      <a href="#" v-on:click="onSubmit"
+        ><img class="search-icon" src="/search-icon.png"
+      /></a>
+    </div> -->
 
     <div class="container">
       <div v-for="(ship, index) in starshipList" :key="index" class="card">
@@ -45,12 +48,13 @@
 </template>
 
 <script>
+import SearchBar from "./SearchBar";
+
 export default {
   name: "Deck",
-  components: {},
+  components: { SearchBar },
   data: function () {
     return {
-      data: false,
       urlBase: "https://swapi.dev/api/",
       starshipList: [],
       nextPage: "",
@@ -114,8 +118,7 @@ export default {
         this.fetchData();
       }
     },
-    scroll(person) {
-      console.log(person);
+    scroll() {
       window.onscroll = () => {
         let bottomOfWindow =
           document.documentElement.scrollTop + window.innerHeight ===
@@ -130,9 +133,14 @@ export default {
     onSubmit() {
       this.fetchSearchData();
     },
+		onKeyUp(){
+			this.searchText = this.$refs.searchbar._data.searchText;
+			this.fetchSearchData();
+			// console.log(this.$refs.searchbar._data.searchText);
+		}
   },
   mounted() {
-    this.scroll(this.person);
+    this.scroll();
   },
 };
 </script>
@@ -281,7 +289,7 @@ body {
 }
 
 /* Search Bar */
-
+/* 
 .search-container {
   padding-top: 30px;
   width: 490px;
@@ -323,5 +331,5 @@ input#search-bar:focus:-ms-placeholder {
   height: 30px;
   top: -35px;
   right: 10px;
-}
+} */
 </style>
