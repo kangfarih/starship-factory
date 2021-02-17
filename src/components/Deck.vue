@@ -1,6 +1,17 @@
 <template>
   <div class="deck-page">
-    <div class="search-bar"></div>
+    <div class="search-bar">
+      <div class="search-container">
+        <input
+          v-on:keyup.enter="onSubmit"
+          v-model="searchText"
+          type="text"
+          id="search-bar"
+          placeholder="Search?"
+        />
+        <a href="#"><img class="search-icon" src="/search-icon.png" /></a>
+      </div>
+    </div>
     <div class="container">
       <div v-for="(ship, index) in starshipList" :key="index" class="card">
         <div class="title">{{ ship.name }}</div>
@@ -37,7 +48,7 @@
 <script>
 export default {
   name: "Deck",
-  props: {},
+  components: {},
   data: function () {
     return {
       data: false,
@@ -45,6 +56,7 @@ export default {
       starshipList: [],
       nextPage: "",
       onloading: false,
+      searchText: "",
     };
   },
   created: function () {
@@ -80,6 +92,27 @@ export default {
           });
       }
     },
+    fetchSearchData() {
+      if (this.searchText !== "") {
+        this.onloading = true;
+        this.starshipList = [];
+        var urlApi = this.urlBase + "starships/?search=" + this.searchText;
+
+        fetch(urlApi)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            this.nextPage = data.next;
+            this.starshipList = this.starshipList.concat(data.results);
+            this.onloading = false;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        this.fetchData();
+      }
+    },
     scroll(person) {
       console.log(person);
       window.onscroll = () => {
@@ -92,6 +125,9 @@ export default {
           this.fetchNext();
         }
       };
+    },
+    onSubmit() {
+      this.fetchSearchData();
     },
   },
   mounted() {
@@ -113,7 +149,8 @@ export default {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-	background-size: cover;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 body {
@@ -139,6 +176,7 @@ body {
   color: white;
   float: left;
   height: 220px;
+  min-width: 350px;
 }
 @media (max-width: 768px) {
   .card {
@@ -238,5 +276,49 @@ body {
   50% {
     transform: translateY(15px);
   }
+}
+
+/* Search Bar */
+
+.search-container {
+  width: 490px;
+  display: block;
+  margin: 0 auto;
+}
+
+input#search-bar {
+  margin: 0 auto;
+  width: 100%;
+  height: 45px;
+  padding: 0 20px;
+  font-size: 1rem;
+  border: 1px solid #d0cfce;
+  outline: none;
+}
+input#search-bar:focus {
+  border: 1px solid rgb(214, 183, 6);
+  transition: 0.35s ease;
+  color: #000000;
+}
+input#search-bar:focus::-webkit-input-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+input#search-bar:focus::-moz-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+input#search-bar:focus:-ms-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+
+.search-icon {
+  position: relative;
+  float: right;
+  width: 30px;
+  height: 30px;
+  top: -35px;
+  right: 10px;
 }
 </style>
