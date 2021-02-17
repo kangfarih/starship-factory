@@ -113,7 +113,8 @@ export default {
         this.fetchData();
       }
     },
-    scroll() {
+    scroll(person) {
+			console.log(person)
       window.onscroll = () => {
         let bottomOfWindow =
           document.documentElement.scrollTop + window.innerHeight ===
@@ -138,7 +139,7 @@ export default {
     },
   },
   mounted() {
-    this.scroll();
+    this.scroll(this.person);
   },
 };
 </script>
