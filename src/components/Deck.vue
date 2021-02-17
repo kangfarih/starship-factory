@@ -73,11 +73,12 @@ export default {
           console.log(data);
           this.nextPage = data.next;
           this.starshipList = this.starshipList.concat(data.results);
+          this.onloading = false;
         });
     },
     fetchNext() {
       // console.log("fetch Next");
-			console.log("Fetch next page")
+      console.log("Fetch next page");
       if (this.nextPage !== null) {
         this.onloading = true;
         fetch(this.nextPage)
@@ -116,11 +117,18 @@ export default {
     },
     scroll() {
       window.onscroll = () => {
+        // console.log('scrolling')
         let bottomOfWindow =
-          document.documentElement.scrollTop + window.innerHeight ===
-          document.documentElement.offsetHeight;
+          document.documentElement.scrollTop +
+            window.innerHeight -
+            document.documentElement.offsetHeight >
+            -5 &&
+          document.documentElement.scrollTop +
+            window.innerHeight -
+            document.documentElement.offsetHeight <
+            5;
 
-        if (bottomOfWindow) {
+        if (bottomOfWindow && !this.onloading) {
           // console.log('at bottom');
           this.fetchNext();
         }
