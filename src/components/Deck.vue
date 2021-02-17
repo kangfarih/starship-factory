@@ -1,10 +1,6 @@
 <template>
   <div class="deck-page">
-
-		<div class="search-bar">
-
-
-		</div>
+    <div class="search-bar"></div>
     <div class="container">
       <div v-for="(ship, index) in starshipList" :key="index" class="card">
         <div class="title">{{ ship.name }}</div>
@@ -113,7 +109,11 @@ export default {
 }
 
 .deck-page {
-  background-color: 000;
+  background-image: url("/bg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+	background-size: cover;
 }
 
 body {
@@ -201,6 +201,7 @@ body {
   font-family: sans-serif;
   font-weight: 600;
   text-align: center;
+  color: white;
 }
 .loading span {
   display: inline-block;
