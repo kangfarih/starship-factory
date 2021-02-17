@@ -8,7 +8,7 @@
         id="search-bar"
         placeholder="Search?"
       />
-      <a href="#"><img class="search-icon" src="/search-icon.png" /></a>
+      <a href="#" v-on:click="onSubmit"><img class="search-icon" src="/search-icon.png" /></a>
     </div>
 
     <div class="container">
@@ -65,6 +65,8 @@ export default {
     fetchData() {
       var urlApi = this.urlBase + "starships/";
       this.urlBase + "starships/?page=" + this.page;
+      this.onloading = true;
+      this.starshipList = [];
       console.log(urlApi);
       fetch(urlApi)
         .then((response) => response.json())
@@ -159,7 +161,7 @@ body {
 
 .container {
   display: inline-block;
-	width: 100%;
+  width: 100%;
 }
 
 /* CARD  */
