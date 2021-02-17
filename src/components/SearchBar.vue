@@ -1,9 +1,12 @@
 <template>
-  <div class="search-bar">
-    <div class="search-container">
-      <input v-model="searchText" type="text" id="search-bar" placeholder="Search?" />
-      <a href="#"><img class="search-icon" src="/search-icon.png" /></a>
-    </div>
+  <div class="search-container">
+    <input
+      v-model="searchText"
+      type="text"
+      id="search-bar"
+      placeholder="Search?"
+    />
+    <a href="#"><img class="search-icon" src="/search-icon.png" /></a>
   </div>
 </template>
 
@@ -24,6 +27,7 @@ export default {
   width: 490px;
   display: block;
   margin: 0 auto;
+  padding-top: 30px;
 }
 
 input#search-bar {

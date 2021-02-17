@@ -1,17 +1,16 @@
 <template>
   <div class="deck-page">
-    <div class="search-bar">
-      <div class="search-container">
-        <input
-          v-on:keyup.enter="onSubmit"
-          v-model="searchText"
-          type="text"
-          id="search-bar"
-          placeholder="Search?"
-        />
-        <a href="#"><img class="search-icon" src="/search-icon.png" /></a>
-      </div>
+    <div class="search-container">
+      <input
+        v-on:keyup.enter="onSubmit"
+        v-model="searchText"
+        type="text"
+        id="search-bar"
+        placeholder="Search?"
+      />
+      <a href="#"><img class="search-icon" src="/search-icon.png" /></a>
     </div>
+
     <div class="container">
       <div v-for="(ship, index) in starshipList" :key="index" class="card">
         <div class="title">{{ ship.name }}</div>
@@ -160,6 +159,7 @@ body {
 
 .container {
   display: inline-block;
+	width: 100%;
 }
 
 /* CARD  */
@@ -243,7 +243,7 @@ body {
 }
 .loading span {
   display: inline-block;
-  margin: 0 -0.05em;
+  margin: 5px;
 }
 
 .loading span {
@@ -281,6 +281,7 @@ body {
 /* Search Bar */
 
 .search-container {
+  padding-top: 30px;
   width: 490px;
   display: block;
   margin: 0 auto;
